@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Linking style sheet to html document -->
+        <link rel="stylesheet" type="text/css" href="./style.css">
+        <!-- Linking script to html document-->
+    </head>
+    <body>
+        <!-- form -->
+        <div class="container">
+            <label class="fL"><b>Forename.</b></label>
+            <input class="fName" type="text" placeholder="Enter Username" name="uname" required>
+        
+            <label class="sL"><b>Surname..</b></label>
+            <input class="sName" type="text" placeholder="Enter Username" name="uname" required>
+            <button class="submit" type="submit" onclick="genName()">Sets users forename and surname</button>
+          </div>
+
+          <div class="lotto"> 
+            <h2><strong><i><center>LOTTO NUMBER GENERATOR</center></i></strong></h2>
+            <ul>
+                <li>Option 1. Create your lottery user-account</li>
+                <li>Option 2. Lottery number generator</li>
+                <li>Option 3. EXIT</li>
+            </ul>
+            <button class="rProgram" type="submit" onclick="menuPicker()">Run Program</button>
+          </div>
+          <script>
+var username;
+
+function genName() {
+    var fName = document.querySelector("[class='fName']").value;
+    var sName = document.querySelector("[class='sName']").value;
+    if (fName.length > 0 && sName.length > 0) {
+        if (localStorage.getItem("username") != null) {
+            localStorage.removeItem("username");
+        }
+        username = `${fName.charAt(0)}.${sName}`;
+        username = username.toUpperCase();
+        localStorage.setItem('username', username)
+
+        document.querySelector("[class='lotto']").style = "display: inline-block; padding: 48px; margin-left: 34%";
+        document.querySelector("[class='rProgram']").style ="display: block; max-width: 300px; margin: auto;";
+        document.querySelector("[class='container']").style = "display: none;";
+    } else if (fName.length <= 0 && sName.length > 0) {
+        alert('Please enter a Forename.');
+    } else if (fName.length > 0 && sName.length <= 0) {
+        alert('Please enter a Surname.');
+    } else {
+        alert('Please add some values');
+    }
+
+}
+
+
+async function menuPicker() {
+    try {
+        var option = prompt("Enter an option : 1, 2 or 3 to exit", "Please enter a value.");
+        if (option === '1') {
+            alert(`Your username is: ${localStorage.getItem('username')}`);
+        } else if (option === '2') {
+            var numbers = lottoNum(6) //Number, is the number of random numbers you want to return
+            alert(`Your ${numbers.length} lotto numbers are: ${numbers} `);
+        } else if (option === '3') {
+            alert('PROGRAM ENDED');
+        } else {
+            alert('Error. Please enter a value 1-3');
+        }
+    } catch (err) {
+        console.log(err);
+    }
+
+}
+
+
+function lottoNum(num) {
+    var x = [];
+    for (var i = 0; i < num; i++) {
+        x[i] = Math.floor(Math.random() * 30);
+        console.log(x[i]);
+    }
+    console.log(x);
+    return x;
+}
+
+
+          </script>
+    </body>
+</html>
